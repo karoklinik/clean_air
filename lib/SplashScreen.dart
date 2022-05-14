@@ -5,11 +5,27 @@ import 'package:google_fonts/google_fonts.dart';
 import 'main.dart';
 
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({Key? key}) : super(key: key);
+
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    if (havePermission()) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => const PermissionScreen(
+                  title: Strings.appTitle,
+                )),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,18 +92,4 @@ class _SplashScreenState extends State<SplashScreen> {
 
 bool havePermission() {
   return true;
-}
-
-@override
-void initState() {
-  super.initState();
-  if (havePermission()) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) => const PermissionScreen(
-                title: Strings.appTitle,
-              )),
-    );
-  }
 }
