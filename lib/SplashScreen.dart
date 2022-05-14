@@ -1,6 +1,10 @@
+import 'dart:developer';
+
 import 'package:clean_air/PermissionScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:weather/weather.dart';
 
 import 'main.dart';
 
@@ -23,6 +27,10 @@ class _SplashScreenState extends State<SplashScreen> {
                   title: Strings.appTitle,
                 )),
       );
+    } else {
+      SchedulerBinding.instance?.addPostFrameCallback((timeStamp) {
+        executeOnceAfterBuild();
+      });
     }
   }
 
@@ -88,8 +96,15 @@ class _SplashScreenState extends State<SplashScreen> {
       ),
     );
   }
+
+  void executeOnceAfterBuild() async {
+    WeatherFactory wf = new WeatherFactory("3a68f67fd0d2a30c73a4b81306a7657e",
+        language: Language.POLISH);
+    Weather w = await wf.currentWeatherByCityName("Wałbrzych");
+    log(w.toJson().toString());
+  }
 }
 
 bool havePermission() {
-  return true;
+  return false;
 }
