@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'main.dart';
-
 class AirScreen extends StatefulWidget {
   const AirScreen({Key? key}) : super(key: key);
 
@@ -31,35 +29,60 @@ class _AirScreenState extends State<AirScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text("Jakość powietrza"),
-                Padding(padding: EdgeInsets.only(top: 2)),
-                Text("Bardzo dobra"),
-                Padding(padding: EdgeInsets.only(top: 24)),
+                Text("Jakość powietrza",
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.lato(
+                        textStyle: const TextStyle(
+                      fontSize: 14.0,
+                      height: 1.2,
+                      fontWeight: FontWeight.w300,
+                      color: Colors.white,
+                    ))),
+                const Padding(padding: EdgeInsets.only(top: 2)),
+                Text("Bardzo dobra",
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.lato(
+                        textStyle: const TextStyle(
+                      fontSize: 22.0,
+                      height: 1.2,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                    ))),
+                const Padding(padding: EdgeInsets.only(top: 24)),
                 CircleAvatar(
                   radius: 91.0,
+                  backgroundColor: Colors.white,
                   child: Center(
-                      child: Container(
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "23",
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                        Text("23",
                             textAlign: TextAlign.center,
-                          ),
-                          Text(
-                            "CAQI info",
+                            style: GoogleFonts.lato(
+                                textStyle: const TextStyle(
+                              fontSize: 64.0,
+                              height: 1.2,
+                              fontWeight: FontWeight.w300,
+                              color: Colors.white,
+                            ))),
+                        Text("CAQI info",
                             textAlign: TextAlign.center,
-                          )
-                        ]),
-                  )),
+                            style: GoogleFonts.lato(
+                                textStyle: const TextStyle(
+                              fontSize: 16.0,
+                              height: 1.2,
+                              fontWeight: FontWeight.w300,
+                              color: Colors.white,
+                            )))
+                      ])),
                 ),
-                Padding(padding: EdgeInsets.only(top: 24)),
+                const Padding(padding: EdgeInsets.only(top: 24)),
                 IntrinsicHeight(
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SizedBox(
-                          width: 130,
+                          width: 100,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
@@ -70,28 +93,28 @@ class _AirScreenState extends State<AirScreen> {
                                     fontSize: 14.0,
                                     height: 1.2,
                                     fontWeight: FontWeight.w300,
-                                    color: Colors.white,
+                                    color: Colors.black,
                                   ))),
                               const Padding(padding: EdgeInsets.only(top: 2.0)),
                               Text('10%',
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.lato(
                                       textStyle: const TextStyle(
-                                    fontSize: 26.0,
+                                    fontSize: 22.0,
                                     height: 1.2,
                                     fontWeight: FontWeight.w700,
-                                    color: Colors.white,
+                                    color: Colors.black,
                                   )))
                             ],
                           ),
                         ),
                         const VerticalDivider(
-                          color: Colors.white,
-                          width: 48,
+                          color: Colors.black,
+                          width: 24,
                           thickness: 1,
                         ),
                         SizedBox(
-                          width: 130,
+                          width: 100,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
@@ -102,33 +125,52 @@ class _AirScreenState extends State<AirScreen> {
                                     fontSize: 14.0,
                                     height: 1.2,
                                     fontWeight: FontWeight.w300,
-                                    color: Colors.white,
+                                    color: Colors.black,
                                   ))),
                               const Padding(padding: EdgeInsets.only(top: 2.0)),
                               Text('12%',
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.lato(
                                       textStyle: const TextStyle(
-                                    fontSize: 26.0,
+                                    fontSize: 22.0,
                                     height: 1.2,
                                     fontWeight: FontWeight.w700,
-                                    color: Colors.white,
+                                    color: Colors.black,
                                   )))
                             ],
                           ),
                         ),
                       ]),
                 ),
-                Padding(padding: EdgeInsets.only(top: 20)),
-                Text("Stacja pomiarowa"),
-                Padding(padding: EdgeInsets.only(top: 8)),
-                Text("Warszawa"),
+                const Padding(padding: EdgeInsets.only(top: 20)),
+                Text("Stacja pomiarowa",
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.lato(
+                        textStyle: const TextStyle(
+                      fontSize: 12.0,
+                      height: 1.2,
+                      fontWeight: FontWeight.w300,
+                      color: Colors.white,
+                    ))),
+                const Padding(padding: EdgeInsets.only(top: 8)),
+                Text("Warszawa",
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.lato(
+                        textStyle: const TextStyle(
+                      fontSize: 14.0,
+                      height: 1.2,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.white,
+                    ))),
+                const Padding(
+                    padding:
+                        EdgeInsets.only(top: 76)) //powinno być osobną stałą
               ],
             ),
           ),
           Positioned(
               left: 8,
-              bottom: 0,
+              bottom: (76.0) * 2,
               right: 0,
               top: 0,
               child: Container(
@@ -146,11 +188,13 @@ class _AirScreenState extends State<AirScreen> {
                         ),
                       ),
                       ClipRect(
+                        //pierwszy na stosie, na jego wierzchu
                         child: Align(
                           alignment: Alignment.topLeft,
                           heightFactor: 1 - 0.4,
                           child: Image.asset(
                             'assets/danger-value.png',
+                            color: const Color(0xDD4acf87),
                             scale: 0.9,
                           ),
                         ),
@@ -166,8 +210,8 @@ class _AirScreenState extends State<AirScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(
+                    const Padding(
+                      padding: EdgeInsets.only(
                           top: 62, right: 10, bottom: 14, left: 10),
                       child: Divider(
                         height: 10,
@@ -182,7 +226,30 @@ class _AirScreenState extends State<AirScreen> {
                         borderRadius: BorderRadius.circular(6.0),
                         child: Container(
                           color: Colors.white,
-                          child: Text("Wyjdź na dwór"),
+                          padding: const EdgeInsets.all(10.0),
+                          height: 38,
+                          child: IntrinsicHeight(
+                              child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Image(
+                                alignment: Alignment.centerLeft,
+                                image: AssetImage('assets/happy.png'),
+                              ),
+                              const Padding(
+                                  padding: EdgeInsets.only(left: 8.0)),
+                              Text(
+                                  "Skorzystaj z dobrego powietrza i wyjdź na dwór",
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.lato(
+                                      textStyle: const TextStyle(
+                                    fontSize: 12.0,
+                                    height: 1.2,
+                                    fontWeight: FontWeight.w300,
+                                    color: Colors.black,
+                                  ))),
+                            ],
+                          )),
                         ),
                       ),
                     ),
