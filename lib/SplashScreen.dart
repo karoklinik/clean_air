@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:clean_air/MyHomePage.dart';
 import 'package:clean_air/PermissionScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -102,6 +103,8 @@ class _SplashScreenState extends State<SplashScreen> {
         language: Language.POLISH);
     Weather w = await wf.currentWeatherByCityName("Wałbrzych");
     log(w.toJson().toString());
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => MyHomePage(weather: w)));
   }
 }
 

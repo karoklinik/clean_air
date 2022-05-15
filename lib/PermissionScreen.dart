@@ -1,4 +1,3 @@
-// ignore: file_names
 import 'package:clean_air/MyHomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -69,7 +68,7 @@ class _PermissionScreenState extends State<PermissionScreen> {
               right: 0,
               child: Container(
                   alignment: Alignment.center,
-                  margin: EdgeInsets.only(left: 10.0, right: 10.0),
+                  margin: const EdgeInsets.only(left: 10.0, right: 10.0),
                   child: SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
@@ -77,17 +76,18 @@ class _PermissionScreenState extends State<PermissionScreen> {
                           backgroundColor:
                               MaterialStateProperty.all<Color>(Colors.white),
                           padding: MaterialStateProperty.all(
-                              EdgeInsets.only(top: 12.0, bottom: 12.0))),
+                              const EdgeInsets.only(top: 12.0, bottom: 12.0))),
                       onPressed: () {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    MyHomePage(title: Strings.appTitle)));
+                                    const MyHomePage(title: Strings.appTitle)));
                       },
-                      child: Text(
+                      child: const Text(
                         'Zgoda!',
-                        style: TextStyle(fontSize: 16.0, color: Colors.black),
+                        style: const TextStyle(
+                            fontSize: 16.0, color: Colors.black),
                       ),
                     ),
                   )))
