@@ -1,6 +1,3 @@
-import 'package:clean_air/MyHomePage.dart';
-
-import 'PermissionScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 

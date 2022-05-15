@@ -1,7 +1,6 @@
 import 'package:clean_air/MyHomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:weather/weather.dart';
 
 import 'main.dart';
 
@@ -87,8 +86,7 @@ class _PermissionScreenState extends State<PermissionScreen> {
                       },
                       child: const Text(
                         'Zgoda!',
-                        style: const TextStyle(
-                            fontSize: 16.0, color: Colors.black),
+                        style: TextStyle(fontSize: 16.0, color: Colors.black),
                       ),
                     ),
                   )))

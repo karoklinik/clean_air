@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:weather/weather.dart';
 
 class WeatherScreen extends StatefulWidget {
-  final Weather weather;
+  final Weather? weather;
 
-  const WeatherScreen({Key? key, required this.weather}) : super(key: key);
+  const WeatherScreen({Key? key, this.weather}) : super(key: key);
 
   @override
   State<WeatherScreen> createState() => _WeatherScreenState();
@@ -14,23 +15,21 @@ class WeatherScreen extends StatefulWidget {
 
 class _WeatherScreenState extends State<WeatherScreen> {
   @override
+  void initState() {
+    initializeDateFormatting();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         fit: StackFit.expand,
         children: <Widget>[
           Container(
-            decoration: const BoxDecoration(
-                color: Color(0xffffffff),
-                gradient: LinearGradient(
-                  begin: Alignment.bottomLeft,
-                  end: Alignment.topRight,
-                  colors: [
-                    Color(0xff6e6cd8),
-                    Color(0xff48a8ef),
-                    Color(0xff77e1ee)
-                  ],
-                )),
+            decoration: BoxDecoration(
+                color: const Color(0xffffffff),
+                gradient: getGradientByMood(widget.weather)),
           ),
           Align(
             alignment: FractionalOffset.center,
@@ -39,12 +38,12 @@ class _WeatherScreenState extends State<WeatherScreen> {
               children: <Widget>[
                 const Padding(padding: EdgeInsets.only(top: 45.0)),
                 Image(
-                  image:
-                      AssetImage("assets/${getIconByMood(widget.weather)}.png"),
+                  image: AssetImage(
+                      "assets/${getIconByMood(widget.weather!)}.png"),
                 ),
                 const Padding(padding: EdgeInsets.only(top: 41.0)),
                 Text(
-                    "${DateFormat.MMMMEEEEd("pl").format(DateTime.now())}, ${widget.weather.weatherDescription}",
+                    "${DateFormat.MMMMEEEEd("pl").format(DateTime.now())}, ${widget.weather?.weatherDescription}",
                     textAlign: TextAlign.center,
                     style: GoogleFonts.lato(
                         textStyle: const TextStyle(
@@ -55,7 +54,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                     ))),
                 const Padding(padding: EdgeInsets.only(top: 12.0)),
                 Text(
-                    '${widget.weather.temperature?.celsius?.floor().toString()}',
+                    '${widget.weather?.temperature?.celsius?.floor().toString()}',
                     textAlign: TextAlign.center,
                     style: GoogleFonts.lato(
                         textStyle: const TextStyle(
@@ -65,7 +64,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                       color: Colors.white,
                     ))),
                 Text(
-                    'Odczuwalna ${widget.weather.tempFeelsLike?.celsius?.floor().toString()}',
+                    'Odczuwalna ${widget.weather?.tempFeelsLike?.celsius?.floor().toString()}',
                     textAlign: TextAlign.center,
                     style: GoogleFonts.lato(
                         textStyle: const TextStyle(
@@ -74,12 +73,12 @@ class _WeatherScreenState extends State<WeatherScreen> {
                       fontWeight: FontWeight.w700,
                       color: Colors.white,
                     ))),
-                Padding(padding: EdgeInsets.only(top: 25.0)),
+                const Padding(padding: EdgeInsets.only(top: 25.0)),
                 IntrinsicHeight(
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Container(
+                        SizedBox(
                           width: 130,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.end,
@@ -94,7 +93,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                     color: Colors.white,
                                   ))),
                               const Padding(padding: EdgeInsets.only(top: 2.0)),
-                              Text('${widget.weather.pressure?.floor()} hPa',
+                              Text('${widget.weather?.pressure?.floor()} hPa',
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.lato(
                                       textStyle: const TextStyle(
@@ -106,12 +105,12 @@ class _WeatherScreenState extends State<WeatherScreen> {
                             ],
                           ),
                         ),
-                        VerticalDivider(
+                        const VerticalDivider(
                           color: Colors.white,
                           width: 48,
                           thickness: 1,
                         ),
-                        Container(
+                        SizedBox(
                           width: 130,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -126,7 +125,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                     color: Colors.white,
                                   ))),
                               const Padding(padding: EdgeInsets.only(top: 2.0)),
-                              Text('${widget.weather.windSpeed?.floor()} m/s',
+                              Text('${widget.weather?.windSpeed?.floor()} m/s',
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.lato(
                                       textStyle: const TextStyle(
@@ -140,9 +139,9 @@ class _WeatherScreenState extends State<WeatherScreen> {
                         ),
                       ]),
                 ),
-                Padding(padding: EdgeInsets.only(top: 24.0)),
-                if (widget.weather.rainLastHour != null)
-                  Text('Opady ${widget.weather.rainLastHour} mm/1h',
+                const Padding(padding: EdgeInsets.only(top: 24.0)),
+                if (widget.weather?.rainLastHour != null)
+                  Text('Opady ${widget.weather?.rainLastHour} mm/1h',
                       textAlign: TextAlign.center,
                       style: GoogleFonts.lato(
                           textStyle: const TextStyle(
@@ -151,7 +150,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                         fontWeight: FontWeight.w400,
                         color: Colors.white,
                       ))),
-                Padding(padding: EdgeInsets.only(top: 68.0)),
+                const Padding(padding: EdgeInsets.only(top: 68.0)),
               ],
             ),
           ),
@@ -189,7 +188,32 @@ class _WeatherScreenState extends State<WeatherScreen> {
   }
 
   bool isNight(Weather weather) {
-    return DateTime.now().isAfter(weather.sunset) ||
-        DateTime.now().isBefore(weather.sunrise);
+    var dateSunset = weather.sunset!;
+    var dateSunrise = weather.sunrise!;
+    return DateTime.now().isAfter(dateSunset) ||
+        DateTime.now().isBefore(dateSunrise);
+  }
+
+  LinearGradient getGradientByMood(Weather? weather) {
+    var main = weather?.weatherMain;
+    if (main == "Clouds" || main == "Drizzle" || main == "Snow") {
+      return const LinearGradient(
+        begin: Alignment.bottomLeft,
+        end: Alignment.topRight,
+        colors: [Color(0xff6e6cd8), Color(0xff48a8ef), Color(0xff77e1ee)],
+      );
+    } else if (main == "Thunderstorm" || isNight(weather!)) {
+      return const LinearGradient(
+        begin: Alignment.topRight,
+        end: Alignment.bottomLeft,
+        colors: [Color(0xff313545), Color(0xff121118)],
+      );
+    } else {
+      return const LinearGradient(
+        begin: Alignment.bottomRight,
+        end: Alignment.topLeft,
+        colors: [Color(0xff5283F0), Color(0xffcdedd4)],
+      );
+    }
   }
 }

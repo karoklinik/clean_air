@@ -99,7 +99,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void executeOnceAfterBuild() async {
-    WeatherFactory wf = new WeatherFactory("3a68f67fd0d2a30c73a4b81306a7657e",
+    WeatherFactory wf = WeatherFactory("3a68f67fd0d2a30c73a4b81306a7657e",
         language: Language.POLISH);
     Weather w = await wf.currentWeatherByCityName("Wałbrzych");
     log(w.toJson().toString());
