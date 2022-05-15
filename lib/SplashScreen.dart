@@ -1,5 +1,6 @@
+import 'dart:convert';
 import 'dart:developer';
-
+import 'package:http/http.dart' as http;
 import 'package:clean_air/MyHomePage.dart';
 import 'package:clean_air/PermissionScreen.dart';
 import 'package:flutter/material.dart';
@@ -103,8 +104,53 @@ class _SplashScreenState extends State<SplashScreen> {
         language: Language.POLISH);
     Weather w = await wf.currentWeatherByCityName("Wałbrzych");
     log(w.toJson().toString());
+
+    var lat = 50.729022;
+    var lng = 16.272669;
+    String _endpoint = 'https:/api.waqi.info/feed/';
+    var keyword = 'geo::$lat;:$lng';
+    var key = "3f6502b117e6d1b1d780120c32cfd5c1b75f466b";
+    String url = "$_endpoint$keyword/?token=:$key";
+
+    http.Response response = await http.get(Uri.parse(url));
+    log(response.body.toString());
+
+    Map<String, dynamic> jsonBody = json.decode(response.body);
+    AirQuality aq = AirQuality(jsonBody);
+
     Navigator.push(context,
         MaterialPageRoute(builder: (context) => MyHomePage(weather: w)));
+  }
+}
+
+class AirQuality {
+  bool isGood = false;
+  bool isBad = false;
+  String quality = "";
+  String advice = "";
+  int aqi = 0;
+  int pm25 = 0;
+  int pm10 = 0;
+  String station = "";
+
+  AirQuality(Map<String, dynamic> jsonBody) {
+    aqi = int.tryParse(jsonBody['data']['aqi'].toString())!;
+    pm25 = int.tryParse(jsonBody['data']['iaqi']["pm25"]['v'].toString())!;
+    pm10 = int.tryParse(jsonBody['data']['iaqi']["pm10"]['v'].toString())!;
+    station = jsonBody['data']['city']['name'].toString();
+    setupLevel(aqi);
+  }
+  void setupLevel(int aqi) {
+    if (aqi <= 100) {
+      quality = "Bardzo dobra";
+      advice = "Skorzystaj z dobrego powietrza i wyjdź na spacer";
+    } else if (aqi <= 150) {
+      quality = "Bardzo zła!";
+      advice = "Jeśli tylko moesz zostań w domu";
+    } else {
+      quality = "Niedobra";
+      advice = "Zdecydowanie zostań w domu!";
+    }
   }
 }
 
