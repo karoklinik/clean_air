@@ -4,9 +4,9 @@ import 'package:intl/intl.dart';
 import 'package:weather/weather.dart';
 
 class WeatherScreen extends StatefulWidget {
-  final Weather? weather;
+  final Weather weather;
 
-  const WeatherScreen({Key? key, this.weather}) : super(key: key);
+  const WeatherScreen({Key? key, required this.weather}) : super(key: key);
 
   @override
   State<WeatherScreen> createState() => _WeatherScreenState();
@@ -44,7 +44,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                 ),
                 const Padding(padding: EdgeInsets.only(top: 41.0)),
                 Text(
-                    "${DateFormat.MMMMEEEEd("pl").format(DateTime.now())}, ${widget.weather?.weatherDescription}",
+                    "${DateFormat.MMMMEEEEd("pl").format(DateTime.now())}, ${widget.weather.weatherDescription}",
                     textAlign: TextAlign.center,
                     style: GoogleFonts.lato(
                         textStyle: const TextStyle(
@@ -55,7 +55,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                     ))),
                 const Padding(padding: EdgeInsets.only(top: 12.0)),
                 Text(
-                    '${widget.weather?.temperature?.celsius?.floor().toString()}',
+                    '${widget.weather.temperature?.celsius?.floor().toString()}',
                     textAlign: TextAlign.center,
                     style: GoogleFonts.lato(
                         textStyle: const TextStyle(
@@ -65,7 +65,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                       color: Colors.white,
                     ))),
                 Text(
-                    'Odczuwalna ${widget.weather?.tempFeelsLike?.celsius?.floor().toString()}',
+                    'Odczuwalna ${widget.weather.tempFeelsLike?.celsius?.floor().toString()}',
                     textAlign: TextAlign.center,
                     style: GoogleFonts.lato(
                         textStyle: const TextStyle(
@@ -94,7 +94,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                     color: Colors.white,
                                   ))),
                               const Padding(padding: EdgeInsets.only(top: 2.0)),
-                              Text('${widget.weather?.pressure?.floor()} hPa',
+                              Text('${widget.weather.pressure?.floor()} hPa',
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.lato(
                                       textStyle: const TextStyle(
@@ -126,7 +126,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                     color: Colors.white,
                                   ))),
                               const Padding(padding: EdgeInsets.only(top: 2.0)),
-                              Text('${widget.weather?.windSpeed?.floor()} m/s',
+                              Text('${widget.weather.windSpeed?.floor()} m/s',
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.lato(
                                       textStyle: const TextStyle(
@@ -141,8 +141,8 @@ class _WeatherScreenState extends State<WeatherScreen> {
                       ]),
                 ),
                 Padding(padding: EdgeInsets.only(top: 24.0)),
-                if (widget.weather?.rainLastHour != null)
-                  Text('Opady ${widget.weather?.rainLastHour} mm/1h',
+                if (widget.weather.rainLastHour != null)
+                  Text('Opady ${widget.weather.rainLastHour} mm/1h',
                       textAlign: TextAlign.center,
                       style: GoogleFonts.lato(
                           textStyle: const TextStyle(
@@ -175,13 +175,21 @@ class _WeatherScreenState extends State<WeatherScreen> {
     );
   }
 
-  String? getIconByMood(Weather? weather) {
-    var main = weather?.weatherMain;
-    if(main=="Clouds" || main="Drizzle" || main="Snow") {
+  String getIconByMood(Weather weather) {
+    var main = weather.weatherMain;
+    if (main == "Clouds" || main == "Drizzle" || main == "Snow") {
       return "weather-rain";
-    }else if (main=="Thunderstorm"){
+    } else if (main == "Thunderstorm") {
       return "weather-lightning";
+    } else if (isNight(weather)) {
+      return "weather-moonny";
+    } else {
+      return "weather=sunny";
     }
-    
+  }
+
+  bool isNight(Weather weather) {
+    return DateTime.now().isAfter(weather.sunset) ||
+        DateTime.now().isBefore(weather.sunrise);
   }
 }

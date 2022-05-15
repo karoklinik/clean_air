@@ -1,6 +1,7 @@
 import 'package:clean_air/MyHomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:weather/weather.dart';
 
 import 'main.dart';
 
@@ -82,7 +83,7 @@ class _PermissionScreenState extends State<PermissionScreen> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    const MyHomePage(title: Strings.appTitle)));
+                                    MyHomePage(title: Strings.appTitle)));
                       },
                       child: const Text(
                         'Zgoda!',

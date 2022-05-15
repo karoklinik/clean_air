@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:weather/weather.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, this.title, this.weather}) : super(key: key);
+  const MyHomePage({Key? key, this.title, required this.weather})
+      : super(key: key);
 
   final String? title;
-  final Weather? weather;
+  final Weather weather;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
