@@ -45,11 +45,15 @@ class _MyHomePageState extends State<MyHomePage> {
           iconSize: 38,
           currentIndex: _currentIndex,
           onTap: (index) => setState((() => _currentIndex = index)),
-          items: const [
+          items: [
             BottomNavigationBarItem(
-                icon: Icon(Icons.masks_outlined), label: 'powietrze'),
+                icon: Image.asset("assets/house.png"),
+                label: 'Powietrze',
+                activeIcon: Image.asset("assets/house-checked.png")),
             BottomNavigationBarItem(
-                icon: Icon(Icons.wb_cloudy_outlined), label: 'pogoda'),
+                icon: Image.asset("assets/cloud.png"),
+                label: 'Pogoda',
+                activeIcon: Image.asset("assets/cloud-checked.png")),
           ]),
     );
   }

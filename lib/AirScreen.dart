@@ -31,44 +31,163 @@ class _AirScreenState extends State<AirScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                const Image(
-                  image: AssetImage("assets/cloud-sun.png"),
-                  color: Colors.black,
+                Text("Jakość powietrza"),
+                Padding(padding: EdgeInsets.only(top: 2)),
+                Text("Bardzo dobra"),
+                Padding(padding: EdgeInsets.only(top: 24)),
+                CircleAvatar(
+                  radius: 91.0,
+                  child: Center(
+                      child: Container(
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "23",
+                            textAlign: TextAlign.center,
+                          ),
+                          Text(
+                            "CAQI info",
+                            textAlign: TextAlign.center,
+                          )
+                        ]),
+                  )),
                 ),
-                const Padding(padding: EdgeInsets.only(top: 15.0)),
-                Text(Strings.appTitle,
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.lato(
-                        textStyle: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 42.0,
-                      color: Colors.black,
-                    ))),
-                const Padding(padding: EdgeInsets.only(top: 5.0)),
-                Text('Powietrze',
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.lato(
-                        textStyle: const TextStyle(
-                      fontSize: 16.0,
-                      color: Colors.black,
-                    )))
+                Padding(padding: EdgeInsets.only(top: 24)),
+                IntrinsicHeight(
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          width: 130,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Text('PM 2,5',
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.lato(
+                                      textStyle: const TextStyle(
+                                    fontSize: 14.0,
+                                    height: 1.2,
+                                    fontWeight: FontWeight.w300,
+                                    color: Colors.white,
+                                  ))),
+                              const Padding(padding: EdgeInsets.only(top: 2.0)),
+                              Text('10%',
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.lato(
+                                      textStyle: const TextStyle(
+                                    fontSize: 26.0,
+                                    height: 1.2,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.white,
+                                  )))
+                            ],
+                          ),
+                        ),
+                        const VerticalDivider(
+                          color: Colors.white,
+                          width: 48,
+                          thickness: 1,
+                        ),
+                        SizedBox(
+                          width: 130,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text('PM 10',
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.lato(
+                                      textStyle: const TextStyle(
+                                    fontSize: 14.0,
+                                    height: 1.2,
+                                    fontWeight: FontWeight.w300,
+                                    color: Colors.white,
+                                  ))),
+                              const Padding(padding: EdgeInsets.only(top: 2.0)),
+                              Text('12%',
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.lato(
+                                      textStyle: const TextStyle(
+                                    fontSize: 26.0,
+                                    height: 1.2,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.white,
+                                  )))
+                            ],
+                          ),
+                        ),
+                      ]),
+                ),
+                Padding(padding: EdgeInsets.only(top: 20)),
+                Text("Stacja pomiarowa"),
+                Padding(padding: EdgeInsets.only(top: 8)),
+                Text("Warszawa"),
               ],
             ),
           ),
           Positioned(
-              left: 0,
-              bottom: 35,
+              left: 8,
+              bottom: 0,
               right: 0,
+              top: 0,
+              child: Container(
+                  alignment: Alignment.centerLeft,
+                  child: Stack(
+                    children: [
+                      ClipRect(
+                        child: Align(
+                          alignment: Alignment.topLeft,
+                          heightFactor: 1,
+                          child: Image.asset(
+                            'assets/danger-value-negative.png',
+                            scale: 0.9,
+                          ),
+                        ),
+                      ),
+                      ClipRect(
+                        child: Align(
+                          alignment: Alignment.topLeft,
+                          heightFactor: 1 - 0.4,
+                          child: Image.asset(
+                            'assets/danger-value.png',
+                            scale: 0.9,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ))),
+          Positioned(
+              left: 0,
+              right: 0,
+              bottom: 0,
               child: Container(
                 alignment: Alignment.center,
-                child: Text('Przywiewam dane...',
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.lato(
-                        textStyle: const TextStyle(
-                      fontWeight: FontWeight.w300,
-                      fontSize: 18.0,
-                      color: Colors.black,
-                    ))),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          top: 62, right: 10, bottom: 14, left: 10),
+                      child: Divider(
+                        height: 10,
+                        color: Colors.black,
+                        thickness: 1,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          right: 10, bottom: 24, left: 10),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(6.0),
+                        child: Container(
+                          color: Colors.white,
+                          child: Text("Wyjdź na dwór"),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ))
         ],
       ),
