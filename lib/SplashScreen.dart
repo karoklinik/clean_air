@@ -30,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 )),
       );
     } else {
-      SchedulerBinding.instance?.addPostFrameCallback((timeStamp) {
+      SchedulerBinding.instance!.addPostFrameCallback((timeStamp) {
         executeOnceAfterBuild();
       });
     }
@@ -107,6 +107,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
     var lat = 50.729022;
     var lng = 16.272669;
+
+    ///feed/geo::lat;:lng/?token=:token
     String _endpoint = 'http://api.waqi.info/feed';
     var keyword = 'geo:$lat;$lng';
     var key = "3f6502b117e6d1b1d780120c32cfd5c1b75f466b";
@@ -137,8 +139,8 @@ class AirQuality {
 
   AirQuality(Map<String, dynamic> jsonBody) {
     aqi = int.tryParse(jsonBody['data']['aqi'].toString());
-    pm25 = int.tryParse(jsonBody["data"]['iaqi']["pm25"].toString());
-    pm10 = int.tryParse(jsonBody['data']['iaqi']["pm10"].toString());
+    //pm25 = int.tryParse(jsonBody["data"]["iaqi"]["pm25"]["v"]toString()); -missing in data download from AirAPI
+    pm10 = int.tryParse(jsonBody["data"]["iaqi"]["pm10"]["v"].toString());
     station = jsonBody['data']['city']['name'].toString();
     setupLevel(aqi!);
   }
