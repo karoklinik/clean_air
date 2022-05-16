@@ -1,13 +1,16 @@
 import 'package:clean_air/AirScreen.dart';
+import 'package:clean_air/SplashScreen.dart';
 import 'package:clean_air/WeatherScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:weather/weather.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, this.title, this.weather}) : super(key: key);
+  const MyHomePage({Key? key, this.title, this.weather, required this.air})
+      : super(key: key);
 
   final String? title;
   final Weather? weather;
+  final AirQuality air;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -19,7 +22,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
-    screens = [const AirScreen(), WeatherScreen(weather: widget.weather)];
+    screens = [
+      AirScreen(air: widget.air),
+      WeatherScreen(weather: widget.weather!)
+    ];
     super.initState();
   }
 

@@ -1,8 +1,10 @@
+import 'package:clean_air/SplashScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AirScreen extends StatefulWidget {
-  const AirScreen({Key? key}) : super(key: key);
+  const AirScreen({Key? key, required this.air}) : super(key: key);
+  final AirQuality air;
 
   @override
   State<AirScreen> createState() => _AirScreenState();
@@ -16,13 +18,10 @@ class _AirScreenState extends State<AirScreen> {
         fit: StackFit.expand,
         children: <Widget>[
           Container(
-            decoration: const BoxDecoration(
-                color: Color(0xffffffff),
-                gradient: LinearGradient(
-                  begin: Alignment.centerRight,
-                  end: Alignment.centerLeft,
-                  colors: [Color(0xff4acf8c), Color(0xff75eda6)],
-                )),
+            decoration: BoxDecoration(
+              color: Color(0xffffffff),
+              gradient: getGradientByMood(widget.air),
+            ),
           ),
           Align(
             alignment: FractionalOffset.center,
@@ -32,21 +31,21 @@ class _AirScreenState extends State<AirScreen> {
                 Text("Jakość powietrza",
                     textAlign: TextAlign.center,
                     style: GoogleFonts.lato(
-                        textStyle: const TextStyle(
+                        textStyle: TextStyle(
                       fontSize: 14.0,
                       height: 1.2,
                       fontWeight: FontWeight.w300,
-                      color: Colors.white,
+                      color: getBackgroundTextColor(widget.air),
                     ))),
                 const Padding(padding: EdgeInsets.only(top: 2)),
-                Text("Bardzo dobra",
+                Text(widget.air.quality,
                     textAlign: TextAlign.center,
                     style: GoogleFonts.lato(
-                        textStyle: const TextStyle(
+                        textStyle: TextStyle(
                       fontSize: 22.0,
                       height: 1.2,
                       fontWeight: FontWeight.w700,
-                      color: Colors.white,
+                      color: getBackgroundTextColor(widget.air),
                     ))),
                 const Padding(padding: EdgeInsets.only(top: 24)),
                 CircleAvatar(
@@ -56,23 +55,23 @@ class _AirScreenState extends State<AirScreen> {
                       child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                        Text("23",
+                        Text((widget.air.aqi! / 200 * 100).floor().toString(),
                             textAlign: TextAlign.center,
                             style: GoogleFonts.lato(
-                                textStyle: const TextStyle(
+                                textStyle: TextStyle(
                               fontSize: 64.0,
                               height: 1.2,
                               fontWeight: FontWeight.w300,
-                              color: Colors.white,
+                              color: getBackgroundTextColor(widget.air),
                             ))),
                         Text("CAQI info",
                             textAlign: TextAlign.center,
                             style: GoogleFonts.lato(
-                                textStyle: const TextStyle(
+                                textStyle: TextStyle(
                               fontSize: 16.0,
                               height: 1.2,
                               fontWeight: FontWeight.w300,
-                              color: Colors.white,
+                              color: getBackgroundTextColor(widget.air),
                             )))
                       ])),
                 ),
@@ -89,27 +88,27 @@ class _AirScreenState extends State<AirScreen> {
                               Text('PM 2,5',
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.lato(
-                                      textStyle: const TextStyle(
+                                      textStyle: TextStyle(
                                     fontSize: 14.0,
                                     height: 1.2,
                                     fontWeight: FontWeight.w300,
-                                    color: Colors.black,
+                                    color: getBackgroundTextColor(widget.air),
                                   ))),
                               const Padding(padding: EdgeInsets.only(top: 2.0)),
-                              Text('10%',
+                              Text(widget.air.pm25.toString() + '%',
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.lato(
-                                      textStyle: const TextStyle(
+                                      textStyle: TextStyle(
                                     fontSize: 22.0,
                                     height: 1.2,
                                     fontWeight: FontWeight.w700,
-                                    color: Colors.black,
+                                    color: getBackgroundTextColor(widget.air),
                                   )))
                             ],
                           ),
                         ),
-                        const VerticalDivider(
-                          color: Colors.black,
+                        VerticalDivider(
+                          color: getBackgroundTextColor(widget.air),
                           width: 24,
                           thickness: 1,
                         ),
@@ -121,21 +120,21 @@ class _AirScreenState extends State<AirScreen> {
                               Text('PM 10',
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.lato(
-                                      textStyle: const TextStyle(
+                                      textStyle: TextStyle(
                                     fontSize: 14.0,
                                     height: 1.2,
                                     fontWeight: FontWeight.w300,
-                                    color: Colors.black,
+                                    color: getBackgroundTextColor(widget.air),
                                   ))),
                               const Padding(padding: EdgeInsets.only(top: 2.0)),
-                              Text('12%',
+                              Text(widget.air.pm10.toString() + '%',
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.lato(
-                                      textStyle: const TextStyle(
+                                      textStyle: TextStyle(
                                     fontSize: 22.0,
                                     height: 1.2,
                                     fontWeight: FontWeight.w700,
-                                    color: Colors.black,
+                                    color: getBackgroundTextColor(widget.air),
                                   )))
                             ],
                           ),
@@ -146,21 +145,21 @@ class _AirScreenState extends State<AirScreen> {
                 Text("Stacja pomiarowa",
                     textAlign: TextAlign.center,
                     style: GoogleFonts.lato(
-                        textStyle: const TextStyle(
+                        textStyle: TextStyle(
                       fontSize: 12.0,
                       height: 1.2,
                       fontWeight: FontWeight.w300,
-                      color: Colors.white,
+                      color: getBackgroundTextColor(widget.air),
                     ))),
                 const Padding(padding: EdgeInsets.only(top: 8)),
-                Text("Warszawa",
+                Text(widget.air.station,
                     textAlign: TextAlign.center,
                     style: GoogleFonts.lato(
-                        textStyle: const TextStyle(
+                        textStyle: TextStyle(
                       fontSize: 14.0,
                       height: 1.2,
                       fontWeight: FontWeight.w400,
-                      color: Colors.white,
+                      color: getBackgroundTextColor(widget.air),
                     ))),
                 const Padding(
                     padding:
@@ -181,22 +180,15 @@ class _AirScreenState extends State<AirScreen> {
                         child: Align(
                           alignment: Alignment.topLeft,
                           heightFactor: 1,
-                          child: Image.asset(
-                            'assets/danger-value-negative.png',
-                            scale: 0.9,
-                          ),
+                          child: getDangerValueBottom(widget.air),
                         ),
                       ),
                       ClipRect(
                         //pierwszy na stosie, na jego wierzchu
                         child: Align(
                           alignment: Alignment.topLeft,
-                          heightFactor: 1 - 0.4,
-                          child: Image.asset(
-                            'assets/danger-value.png',
-                            color: const Color(0xDD4acf87),
-                            scale: 0.9,
-                          ),
+                          heightFactor: 1 - (widget.air.aqi! / 200.floor()),
+                          child: getDangerValueTop(widget.air),
                         ),
                       ),
                     ],
@@ -232,14 +224,13 @@ class _AirScreenState extends State<AirScreen> {
                               child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const Image(
+                              Image(
                                 alignment: Alignment.centerLeft,
-                                image: AssetImage('assets/happy.png'),
+                                image: getAdviceImage(widget.air),
                               ),
                               const Padding(
                                   padding: EdgeInsets.only(left: 8.0)),
-                              Text(
-                                  "Skorzystaj z dobrego powietrza i wyjdź na dwór",
+                              Text(widget.air.advice,
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.lato(
                                       textStyle: const TextStyle(
@@ -259,5 +250,81 @@ class _AirScreenState extends State<AirScreen> {
         ],
       ),
     );
+  }
+
+  LinearGradient getGradientByMood(AirQuality air) {
+    if (air.isGood) {
+      return const LinearGradient(
+        begin: Alignment.bottomLeft,
+        end: Alignment.topRight,
+        colors: [Color(0xff4acf8f), Color(0xff75eda6)],
+      );
+    } else if (air.isBad) {
+      return const LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [Color(0xfffbda61), Color(0xfff76b1c)],
+      );
+    } else {
+      return const LinearGradient(
+        begin: Alignment.bottomLeft,
+        end: Alignment.topRight,
+        colors: [Color(0xfff4003a), Color(0xffff8888)],
+      );
+    }
+  }
+
+  Color? getBackgroundTextColor(AirQuality air) {
+    if (air.isBad || air.isGood)
+      return Colors.black;
+    else
+      return Colors.white;
+  }
+
+  Image getDangerValueBottom(AirQuality air) {
+    if (air.isBad || air.isGood) {
+      return Image.asset(
+        'assets/danger-value-negative.png',
+        scale: 0.9,
+      );
+    } else {
+      return Image.asset(
+        'assets/danger-value.png',
+        scale: 0.9,
+      );
+    }
+  }
+
+  getDangerValueTop(AirQuality air) {
+    if (air.isGood) {
+      return Image.asset(
+        'assets/danger-value-negative.png',
+        color: Color(0xff4acf8f),
+        scale: 0.9,
+      );
+    }
+    if (air.isBad) {
+      return Image.asset(
+        'assets/danger-value-negative.png',
+        color: Color(0xfffbda61),
+        scale: 0.9,
+      );
+    } else {
+      return Image.asset(
+        'assets/danger-value.png',
+        color: Color(0xfff4003a),
+        scale: 0.9,
+      );
+    }
+  }
+
+  AssetImage getAdviceImage(AirQuality air) {
+    if (air.isGood) {
+      return AssetImage('assets/happy.png');
+    } else if (air.isBad) {
+      return AssetImage('assets/ok.png');
+    } else {
+      return AssetImage('assets/sad.png');
+    }
   }
 }
