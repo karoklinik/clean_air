@@ -38,6 +38,9 @@ dependencies:
   weather: ^2.0.1
   intl: ^0.17.0
   http: ^0.13.4
+  sliding_up_panel: ^2.0.0+1
+  geolocator: ^7.4.0
+  permission_handler: ^8.1.4+2
 
 dev_dependencies:
   flutter_test:

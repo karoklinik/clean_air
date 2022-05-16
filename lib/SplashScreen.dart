@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:clean_air/MyHomePage.dart';
 import 'package:clean_air/PermissionScreen.dart';
@@ -21,7 +22,13 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    if (havePermission()) {
+    checkPermission();
+  }
+
+  checkPermission() async {
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied ||
+        permission == LocationPermission.deniedForever) {
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -158,8 +165,4 @@ class AirQuality {
       advice = "Zdecydowanie zostań w domu!";
     }
   }
-}
-
-bool havePermission() {
-  return false;
 }
