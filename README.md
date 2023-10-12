@@ -1,2 +1,2 @@
 # clean_air
- Aplikacja w ramach szkolenia "Flutter and Dart mobile app in practice".
+ App as a part of training "Flutter and Dart mobile app in practice".
